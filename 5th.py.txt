@@ -1,0 +1,123 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[2]:
+
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from apyori import apriori
+
+
+# In[4]:
+
+
+# Read data set
+df = pd.read_csv('Market_Basket_Optimisation.csv', header=None)
+
+
+# In[5]:
+
+
+# Data Analysis
+print(df.shape)
+
+
+# In[7]:
+
+
+df.head()
+
+
+# In[8]:
+
+
+plt.figure(figsize=(20,10))
+df[0].value_counts().plot.bar()
+plt.title('frequency of most popular items', fontsize = 20)
+plt.xticks(rotation = 90 )
+plt.grid()
+plt.show()
+
+
+# In[11]:
+
+
+# Generate the list of transactions from the dataset
+
+# The Apriori library we use requires our dataset to be in the form of a listof lists, 
+# where the whole dataset is a big list and each transaction in the dataset is an inner list within the outer big list.
+#First we transforn dataframe into a list of transactions 7501
+
+
+products= []
+for i in range(0,7501):
+    products.append([str(df.values[i,j]) for j in range(20)])
+
+
+# In[12]:
+
+
+print(products[1])
+
+
+# In[13]:
+
+
+# Train Apriori algorithm on the dataset
+
+
+# In[14]:
+
+
+from apyori import apriori
+
+
+# In[15]:
+
+
+model= apriori(products, min_support= 0.003, min_confidence= 0.2, min_lift=3,min_length = 2 , max_length = 2 )
+
+
+# In[17]:
+
+
+results = list(model)
+for i in results:
+    print('\n')
+    print(i)
+    print('**********')
+
+
+# In[18]:
+
+
+pd.DataFrame(results)
+
+
+# In[19]:
+
+
+for item in results:
+    # first index of the inner list
+    # Contains base item and add item
+    pair = item[0]
+    items = [ x for x in pair ]
+    print("Rule: " + items[0] + " -> " + items [1] )
+    #second index of the inner list
+    print("Support: " + str(item[1]))
+    #third index of the list located at 0th
+    #of the third index of the inner list
+    print("Confidence: " + str( item[2][0][2]))
+    print("Lift: " + str(item[2][0][3]))
+    print("===================================\n")
+    
+    
+
+
+# In[ ]:
+
+
+
+

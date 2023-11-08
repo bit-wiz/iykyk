@@ -1,0 +1,126 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+import pandas as pd
+
+
+# In[2]:
+
+
+df = pd.read_csv('heart.csv')
+df
+
+
+# In[3]:
+
+
+df.shape
+
+
+# In[4]:
+
+
+df.isnull().sum()
+
+
+# In[5]:
+
+
+df.isnull().sum()
+
+
+# In[6]:
+
+
+df[df == 0].count()
+
+
+# In[7]:
+
+
+df.columns
+
+
+# In[8]:
+
+
+df['Age'].mean()
+
+
+# In[9]:
+
+
+newdf = df[['Age', 'Sex', 'ChestPain', 'RestBP', 'Chol']]
+newdf
+
+
+# In[11]:
+
+
+from sklearn.model_selection import train_test_split
+
+
+# In[13]:
+
+
+train, test = train_test_split(df, random_state=0, test_size=0.25)
+
+
+# In[15]:
+
+
+train.shape
+
+
+# In[16]:
+
+
+import numpy as np
+
+
+# In[20]:
+
+
+actual = list(np.ones(45)) + list(np.zeros(55))
+
+
+# In[21]:
+
+
+np.array(actual)
+
+
+# In[27]:
+
+
+pred = list(np.ones(40)) + list(np.zeros(52)) + list(np.ones(8))
+np.array(pred)
+
+
+# In[24]:
+
+
+from sklearn.metrics import ConfusionMatrixDisplay
+
+
+# In[28]:
+
+
+ConfusionMatrixDisplay.from_predictions(actual, pred)
+
+
+# In[29]:
+
+
+from sklearn.metrics import classification_report
+print(classification_report(actual, pred))
+
+
+# In[ ]:
+
+
+
+
