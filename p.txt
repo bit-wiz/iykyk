@@ -1,0 +1,30 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Convert results into a DataFrame
+data = []
+for item in results:
+    pair = item[0]
+    items = [x for x in pair]
+    data.append({'Rule': items[0] + " -> " + items[1], 'Support': item[1], 'Confidence': item[2][0][2], 'Lift': item[2][0][3]})
+df = pd.DataFrame(data)
+
+# Plot the data
+plt.figure(figsize=(10, 6))
+sns.barplot(data=df, x='Rule', y='Support')
+plt.title('Support of Rules')
+plt.xticks(rotation=90)
+plt.show()
+
+plt.figure(figsize=(10, 6))
+sns.barplot(data=df, x='Rule', y='Confidence')
+plt.title('Confidence of Rules')
+plt.xticks(rotation=90)
+plt.show()
+
+plt.figure(figsize=(10, 6))
+sns.barplot(data=df, x='Rule', y='Lift')
+plt.title('Lift of Rules')
+plt.xticks(rotation=90)
+plt.show()
